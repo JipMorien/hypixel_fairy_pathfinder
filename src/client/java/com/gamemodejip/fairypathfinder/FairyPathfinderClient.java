@@ -1,6 +1,7 @@
 package com.gamemodejip.fairypathfinder;
 
 import com.gamemodejip.fairypathfinder.data.FairySoulData;
+import com.gamemodejip.fairypathfinder.render.PathRenderer;
 import com.gamemodejip.fairypathfinder.tracking.FoundSoulTracker;
 import com.gamemodejip.fairypathfinder.tracking.QuestLogReader;
 import net.fabricmc.api.ClientModInitializer;
@@ -22,6 +23,8 @@ public class FairyPathfinderClient implements ClientModInitializer {
 		IslandDetector.register();
 		FoundSoulTracker.register();
 		QuestLogReader.register();
+		PathRenderer.register();
+
 	}
 
 }

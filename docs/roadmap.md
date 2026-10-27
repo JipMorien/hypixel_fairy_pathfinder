@@ -7,12 +7,13 @@
 - `IslandDetector`: island id from the Hypixel Mod API, reset on disconnect, tested in-game
 - `FoundSoulTracker`: found souls from chat, per profile, saved to JSON, tested in-game
 - `QuestLogReader`: completed islands from the Fairy Souls Guide auto-marked as found, tested in-game
+- `SoulNavigator` + `PathRenderer`: box on the nearest missing soul and a straight line to it, tested in-game
 
 ## Planned
 - **Smarter partial islands** (idea): remember the Quest Log count per island (e.g. Hub 78/80);
   once enough souls there are known as found, the rest must be the missing ones
-- **`PathFinder`**: A* over walkable blocks, works through caves
-- **`PathRenderer`**: path line + marker on the target soul
+- **`PathFinder`**: A* over walkable blocks, works through caves; `PathRenderer` then draws
+  the route instead of a straight line
 - **Navigation commands**, `/shnavigate`-style: navigate to the nearest missing soul, stop,
   skip to the next one
 - **Config menu**: in-game settings screen, e.g.

@@ -32,8 +32,9 @@ All code lives in `src/client/java/com/gamemodejip/fairypathfinder/`.
 | `IslandDetector` | `location` | Done | Listens to the Hypixel Mod API location packet and stores the current island id; resets to `null` on disconnect. |
 | `FoundSoulTracker` | `tracking` | Done | Reads "SOUL! You found a Fairy Soul!" / "You have already found that Fairy Soul!" from chat, marks the nearest soul (within 8 blocks) as found, per SkyBlock profile (from the "Profile ID:" join message). Saved to `config/fairypathfinder/found_souls.json`. |
 | `QuestLogReader` | `tracking` | Done | Reads the "Fairy Souls Guide" menu (Quest Log) when the player opens it. Translates item names ("Spider's Den") to island ids (`combat_1`) and marks every soul on islands showing X/X as found. |
+| `SoulNavigator` | `navigation` | Done | Picks the target: the nearest missing soul on the current island. Recalculated on every call, so it moves on as soon as a soul is found. |
 | `PathFinder` | `navigation` | Planned | A* search over walkable blocks between the player and the target soul, including caves. |
-| `PathRenderer` | `render` | Planned | Draws the path line and a marker on the target soul. |
+| `PathRenderer` | `render` | In progress | Draws a box around the target soul and a line to it, visible through walls. Currently a straight line; will follow the `PathFinder` route. |
 | `SoulCommands` | `command` | Planned | Client commands to start/stop navigation, `/shnavigate`-style. |
 | `ConfigScreen` + `ModConfig` | `config` | Planned | In-game settings menu and the saved settings file. |
 
@@ -49,6 +50,11 @@ All code lives in `src/client/java/com/gamemodejip/fairypathfinder/`.
   found, only per-island counts (Quest Log). The mod combines: souls you click (exact) +
   fully completed islands from the Quest Log (all souls there). The mod never clicks souls
   itself; that would be automation.
+- **Drawing uses Minecraft's Gizmos** (`net.minecraft.gizmos.Gizmos`), the game's own debug
+  drawing. Gizmos must be created while Minecraft is collecting them or the game crashes;
+  the client tick is such a moment, so `PathRenderer` draws from `END_CLIENT_TICK`
+  (checked in the decompiled 26.1.2 `Minecraft.runTick`). Drawn per tick (20/s), so the line
+  can trail slightly behind a moving player.
 - **Static classes for now.** Each part has a single global state (one player, one island),
   so plain static classes keep the code short. Can be refactored if it grows.
 
