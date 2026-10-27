@@ -37,19 +37,20 @@ The keys are Hypixel's island ids, the same value the Hypixel Mod API returns fr
 | `mining_1` | Gold Mine | 12 |
 | `combat_3` | The End | 12 |
 | `foraging_1` | The Park | 12 |
-| `foraging_2` | Galatea area (to verify in-game) | 12 |
-| `foraging_3` | Galatea area (to verify in-game) | 12 |
+| `foraging_2` | Moonglade Marsh | 12 |
+| `foraging_3` | Torrhus Canyon (likely, not verified yet) | 12 |
 | `dungeon_hub` | Dungeon Hub | 7 |
 | `lotus_atoll` | Lotus Atoll | 6 |
 | `winter` | Jerry's Workshop | 5 |
-| `fishing_1` | Backwater Bayou (to verify in-game) | 5 |
+| `fishing_1` | Backwater Bayou | 5 |
 | `safari` | Critter Safari | 4 |
 | **Total** | | **271** |
 
 The other 18 of the 289 souls come from dungeons, fishing and the Garden. They have no fixed
 location, so the mod doesn't navigate to them.
 
-Rows marked "to verify" get confirmed once `IslandDetector` logs the island id in-game.
+Verified in-game on 27 Oct 2026 for every island except `foraging_3`. Islands without souls
+return other ids, e.g. `dynamic` for your Private Island, and `null` in the main lobby.
 
 ## Updating the data
 

@@ -4,13 +4,7 @@
 - Project setup: Fabric 26.1.2, Java 25, client-only mod
 - `FairySoulData`: loads 271 souls on 16 islands from the bundled NEU data
 - Hypixel Mod API added as a dependency
-
-## In progress: `IslandDetector`
-1. ~~Empty class with `getCurrentIsland()`~~
-2. Read the island id from the Hypixel Mod API location packet
-3. Reset to `null` when leaving or switching servers
-4. Temporary log line to test in-game (and verify the island ids in the data docs)
-5. Remove the log line
+- `IslandDetector`: island id from the Hypixel Mod API, reset on disconnect, tested in-game
 
 ## Planned
 - **`FoundSoulTracker`**: detect collected souls from chat, save per profile

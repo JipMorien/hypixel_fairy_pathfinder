@@ -39,4 +39,5 @@ The Hypixel Mod API mod must be installed in the instance; SkyBlock Enhanced alr
 it for SkyHanni and Skyblocker.
 
 ## Working style
-Small steps: one function or one small change per commit, tested before the next.
+Small steps (one function or one small change), each built and tested before the next.
+Commits are per finished piece (e.g. a whole class), not per step.
