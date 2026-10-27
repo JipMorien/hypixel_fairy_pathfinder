@@ -31,7 +31,7 @@ All code lives in `src/client/java/com/gamemodejip/fairypathfinder/`.
 | `FairySoulData` | `data` | Done | Loads the bundled soul coordinates and answers "which souls are on island X". |
 | `IslandDetector` | `location` | Done | Listens to the Hypixel Mod API location packet and stores the current island id; resets to `null` on disconnect. |
 | `FoundSoulTracker` | `tracking` | Done | Reads "SOUL! You found a Fairy Soul!" / "You have already found that Fairy Soul!" from chat, marks the nearest soul (within 8 blocks) as found, per SkyBlock profile (from the "Profile ID:" join message). Saved to `config/fairypathfinder/found_souls.json`. |
-| `QuestLogReader` | `tracking` | Planned | Reads the per-island fairy soul counts from the Quest Log menu when the player opens it; marks every soul on a fully completed island as found. |
+| `QuestLogReader` | `tracking` | Done | Reads the "Fairy Souls Guide" menu (Quest Log) when the player opens it. Translates item names ("Spider's Den") to island ids (`combat_1`) and marks every soul on islands showing X/X as found. |
 | `PathFinder` | `navigation` | Planned | A* search over walkable blocks between the player and the target soul, including caves. |
 | `PathRenderer` | `render` | Planned | Draws the path line and a marker on the target soul. |
 | `SoulCommands` | `command` | Planned | Client commands to start/stop navigation, `/shnavigate`-style. |

@@ -105,6 +105,20 @@ public final class FoundSoulTracker {
 		}
 	}
 
+	/**
+	 * Marks every soul on an island as found, e.g. when the Quest Log shows the island is complete.
+	 * Saves once at the end instead of once per soul.
+	 */
+	public static void markAllFound(String islandId) {
+		if (currentProfileId == null) {
+			return;
+		}
+		Set<BlockPos> found = FOUND_PER_PROFILE.computeIfAbsent(currentProfileId, id -> new HashSet<>());
+		if (found.addAll(FairySoulData.getSouls(islandId))) {
+			save();
+		}
+	}
+
 	public static boolean isFound(BlockPos soul) {
 		return FOUND_PER_PROFILE.getOrDefault(currentProfileId, Set.of()).contains(soul);
 	}

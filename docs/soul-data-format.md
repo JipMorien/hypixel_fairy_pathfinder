@@ -38,7 +38,7 @@ The keys are Hypixel's island ids, the same value the Hypixel Mod API returns fr
 | `combat_3` | The End | 12 |
 | `foraging_1` | The Park | 12 |
 | `foraging_2` | Moonglade Marsh | 12 |
-| `foraging_3` | Torrhus Canyon (likely, not verified yet) | 12 |
+| `foraging_3` | Torrhus Canyon | 12 |
 | `dungeon_hub` | Dungeon Hub | 7 |
 | `lotus_atoll` | Lotus Atoll | 6 |
 | `winter` | Jerry's Workshop | 5 |
@@ -49,7 +49,7 @@ The keys are Hypixel's island ids, the same value the Hypixel Mod API returns fr
 The other 18 of the 289 souls come from dungeons, fishing and the Garden. They have no fixed
 location, so the mod doesn't navigate to them.
 
-Verified in-game on 27 Oct 2026 for every island except `foraging_3`. Islands without souls
+Verified in-game on 27 Oct 2026 (Hypixel Mod API and the Fairy Souls Guide totals). Islands without souls
 return other ids, e.g. `dynamic` for your Private Island, and `null` in the main lobby.
 
 ## Updating the data
