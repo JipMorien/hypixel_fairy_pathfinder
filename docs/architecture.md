@@ -11,7 +11,7 @@ fairy_souls.json ──► FairySoulData ──┐
                                      ├──► target soul ──► PathFinder ──► PathRenderer ──► screen
 Hypixel Mod API ──► IslandDetector ──┤
                                      │
-chat messages ──► FoundSoulTracker ──┘          SoulCommands / ConfigScreen control all of this
+chat + Quest Log ──► FoundSoulTracker ┘          SoulCommands / ConfigScreen control all of this
 ```
 
 1. **FairySoulData** knows where every soul is, per island.
@@ -30,7 +30,8 @@ All code lives in `src/client/java/com/gamemodejip/fairypathfinder/`.
 | `FairyPathfinderClient` | (root) | Done | Entry point. Starts every other part when the game loads. |
 | `FairySoulData` | `data` | Done | Loads the bundled soul coordinates and answers "which souls are on island X". |
 | `IslandDetector` | `location` | Done | Listens to the Hypixel Mod API location packet and stores the current island id; resets to `null` on disconnect. |
-| `FoundSoulTracker` | `tracking` | Planned | Reads "SOUL! You found a Fairy Soul!" / "You have already found that Fairy Soul!" from chat and saves found souls per SkyBlock profile. |
+| `FoundSoulTracker` | `tracking` | Done | Reads "SOUL! You found a Fairy Soul!" / "You have already found that Fairy Soul!" from chat, marks the nearest soul (within 8 blocks) as found, per SkyBlock profile (from the "Profile ID:" join message). Saved to `config/fairypathfinder/found_souls.json`. |
+| `QuestLogReader` | `tracking` | Planned | Reads the per-island fairy soul counts from the Quest Log menu when the player opens it; marks every soul on a fully completed island as found. |
 | `PathFinder` | `navigation` | Planned | A* search over walkable blocks between the player and the target soul, including caves. |
 | `PathRenderer` | `render` | Planned | Draws the path line and a marker on the target soul. |
 | `SoulCommands` | `command` | Planned | Client commands to start/stop navigation, `/shnavigate`-style. |
@@ -44,6 +45,10 @@ All code lives in `src/client/java/com/gamemodejip/fairypathfinder/`.
 - **Soul data is bundled**, not downloaded at runtime. Simpler and works offline; the trade-off
   is that the file must be refreshed by hand when Hypixel adds souls (see
   [soul-data-format.md](soul-data-format.md)).
+- **Found souls can't be fully auto-detected.** Hypixel doesn't expose *which* souls you
+  found, only per-island counts (Quest Log). The mod combines: souls you click (exact) +
+  fully completed islands from the Quest Log (all souls there). The mod never clicks souls
+  itself; that would be automation.
 - **Static classes for now.** Each part has a single global state (one player, one island),
   so plain static classes keep the code short. Can be refactored if it grows.
 

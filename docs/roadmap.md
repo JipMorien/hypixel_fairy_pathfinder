@@ -5,9 +5,10 @@
 - `FairySoulData`: loads 271 souls on 16 islands from the bundled NEU data
 - Hypixel Mod API added as a dependency
 - `IslandDetector`: island id from the Hypixel Mod API, reset on disconnect, tested in-game
+- `FoundSoulTracker`: found souls from chat, per profile, saved to JSON, tested in-game
 
 ## Planned
-- **`FoundSoulTracker`**: detect collected souls from chat, save per profile
+- **`QuestLogReader`**: read per-island soul counts from the Quest Log, auto-complete finished islands
 - **`PathFinder`**: A* over walkable blocks, works through caves
 - **`PathRenderer`**: path line + marker on the target soul
 - **Navigation commands**, `/shnavigate`-style: navigate to the nearest missing soul, stop,
