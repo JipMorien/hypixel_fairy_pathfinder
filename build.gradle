@@ -4,6 +4,8 @@ plugins {
 
 repositories {
 	// Loom adds the Minecraft and Fabric repositories automatically.
+	maven { url = 'https://repo.hypixel.net/repository/Hypixel/' }
+	maven { url = 'https://api.modrinth.com/maven' }
 }
 
 loom {
@@ -21,6 +23,10 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// Hypixel Mod API: compile against the API, run with the Fabric mod that implements it
+	compileOnly "net.hypixel:mod-api:${project.hypixel_mod_api_version}"
+	runtimeOnly "maven.modrinth:hypixel-mod-api:${project.hypixel_mod_api_fabric_version}"
 }
 
 processResources {
