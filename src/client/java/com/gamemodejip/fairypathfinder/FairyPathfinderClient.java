@@ -4,6 +4,7 @@ import com.gamemodejip.fairypathfinder.data.FairySoulData;
 import net.fabricmc.api.ClientModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.gamemodejip.fairypathfinder.location.IslandDetector;
 
 /**
  * Client entry point. Each feature class gets registered here as we build it.
@@ -16,5 +17,7 @@ public class FairyPathfinderClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		LOGGER.info("Fairy Pathfinder loaded");
 		FairySoulData.load();
+		IslandDetector.register();
 	}
+
 }
