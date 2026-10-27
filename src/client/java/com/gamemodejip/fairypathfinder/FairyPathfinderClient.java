@@ -1,6 +1,7 @@
 package com.gamemodejip.fairypathfinder;
 
 import com.gamemodejip.fairypathfinder.data.FairySoulData;
+import com.gamemodejip.fairypathfinder.render.DirectionHud;
 import com.gamemodejip.fairypathfinder.render.PathRenderer;
 import com.gamemodejip.fairypathfinder.tracking.FoundSoulTracker;
 import com.gamemodejip.fairypathfinder.tracking.QuestLogReader;
@@ -24,6 +25,7 @@ public class FairyPathfinderClient implements ClientModInitializer {
 		FoundSoulTracker.register();
 		QuestLogReader.register();
 		PathRenderer.register();
+		DirectionHud.register();
 
 	}
 

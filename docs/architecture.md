@@ -32,9 +32,10 @@ All code lives in `src/client/java/com/gamemodejip/fairypathfinder/`.
 | `IslandDetector` | `location` | Done | Listens to the Hypixel Mod API location packet and stores the current island id; resets to `null` on disconnect. |
 | `FoundSoulTracker` | `tracking` | Done | Reads "SOUL! You found a Fairy Soul!" / "You have already found that Fairy Soul!" from chat, marks the nearest soul (within 8 blocks) as found, per SkyBlock profile (from the "Profile ID:" join message). Saved to `config/fairypathfinder/found_souls.json`. |
 | `QuestLogReader` | `tracking` | Done | Reads the "Fairy Souls Guide" menu (Quest Log) when the player opens it. Translates item names ("Spider's Den") to island ids (`combat_1`) and marks every soul on islands showing X/X as found. |
-| `SoulNavigator` | `navigation` | Done | Picks the target: the nearest missing soul on the current island. Recalculated on every call, so it moves on as soon as a soul is found. |
-| `PathFinder` | `navigation` | Planned | A* search over walkable blocks between the player and the target soul, including caves. |
-| `PathRenderer` | `render` | In progress | Draws a box around the target soul and a line to it, visible through walls. Currently a straight line; will follow the `PathFinder` route. |
+| `SoulNavigator` | `navigation` | Done | Picks the target (nearest missing soul), runs `PathFinder` searches on a background thread, and trims the finished route as the player walks it. Searches again only when the soul changes, the player leaves the route (>4 blocks), or nears the end of a partial route. |
+| `PathFinder` | `navigation` | Done | A* through open space (2 blocks free, 26 directions, no floor needed). Ends where the soul is visible within 4 blocks (always within 2.5). Returns a partial route if the soul can't be reached within 80k positions. |
+| `PathRenderer` | `render` | Done | Draws the route with Gizmos: first 8 steps bright and thick, a box on the soul, and a box at the end of a partial route (no line through walls). |
+| `DirectionHud` | `render` | Done | Arrow under the crosshair pointing along the route, plus distance and height difference, e.g. `↗ 34m ▲6`; `…` when the route is partial. |
 | `SoulCommands` | `command` | Planned | Client commands to start/stop navigation, `/shnavigate`-style. |
 | `ConfigScreen` + `ModConfig` | `config` | Planned | In-game settings menu and the saved settings file. |
 
@@ -58,7 +59,24 @@ All code lives in `src/client/java/com/gamemodejip/fairypathfinder/`.
 - **Static classes for now.** Each part has a single global state (one player, one island),
   so plain static classes keep the code short. Can be refactored if it grows.
 
-## Open design question: pathfinding approach
+## Pathfinding design (decided 27 Oct 2026)
+
+- **A* over the live world**, not pre-built island graphs (SkyHanni-style): works in caves
+  without hand-made maps.
+- **Free space, not walking.** First version only allowed walking (8 directions, 1-block jumps,
+  drops up to 3, ladders). In SkyBlock that missed too many routes: drops of any height are fine,
+  and with AOTE and fall-damage cancelling a player gets almost anywhere there's room. Rule now:
+  "2 blocks of free space", all 26 directions. Going up costs a bit extra (`UP_PENALTY`).
+- **Weighted A*** (`HEURISTIC_WEIGHT = 2.5`): much fewer positions examined, route can be a bit
+  longer than the shortest.
+- **Background thread.** On the game thread a far search took 4-17 s at a few ms per tick.
+  `SoulNavigator` now runs searches on one low-priority daemon thread. Only reads the world;
+  reading from another thread isn't officially supported, so failures are caught and retried.
+- **Route trimming.** A finished route is kept and cut down to the part ahead of the player each
+  tick, instead of searching again every few blocks.
+- **fastutil long-keyed collections** in the search (positions as `BlockPos.asLong()`).
+
+## Old design question (kept for reference): pathfinding approach
 
 SkyHanni's `/shnavigate` uses **pre-built island graphs**: hand-made networks of points and
 connections per island. This mod has two options:
