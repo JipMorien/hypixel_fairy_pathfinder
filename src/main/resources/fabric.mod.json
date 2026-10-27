@@ -1,0 +1,24 @@
+{
+	"schemaVersion": 1,
+	"id": "fairypathfinder",
+	"version": "${version}",
+	"name": "Fairy Pathfinder",
+	"description": "Shows a walkable path to the nearest missing Fairy Soul on Hypixel SkyBlock. Display only.",
+	"authors": [
+		"GameModeJip"
+	],
+	"license": "MIT",
+	"icon": "assets/fairypathfinder/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.gamemodejip.fairypathfinder.FairyPathfinderClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.1",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}
